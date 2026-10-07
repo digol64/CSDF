@@ -1,3 +1,4 @@
+const authMiddleware = require("../middleware/auth");
 const express = require("express");
 const multer = require("multer");
 const crypto = require("crypto");
@@ -11,7 +12,11 @@ const upload = multer({
 });
 
 // Upload and analyze file
-router.post("/upload", upload.single("file"), async (req, res) => {
+router.post(
+  "/upload",
+  authMiddleware,
+  upload.single("file"),
+  async (req, res) => {
   try {
     const file = req.file;
 

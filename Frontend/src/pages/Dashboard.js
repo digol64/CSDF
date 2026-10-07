@@ -11,7 +11,13 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchIncidents = async () => {
       try {
-        const response = await api.get("/api/incidents");
+        const token = localStorage.getItem("token");
+
+const response = await api.get("/api/incidents", {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
         setIncidents(response.data);
       } catch (error) {
         console.error("Error fetching incidents:", error);

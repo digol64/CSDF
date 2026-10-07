@@ -1,10 +1,11 @@
+const authMiddleware = require("../middleware/auth");
 const express = require("express");
 const Incident = require("../models/Incident");
 
 const router = express.Router();
 
 // Create a new incident
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
   try {
     const { title, description, reportedBy } = req.body;
 
@@ -36,7 +37,7 @@ router.post("/", async (req, res) => {
 });
 
 // Get all incidents
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const incidents = await Incident.find().sort({
       date: -1,

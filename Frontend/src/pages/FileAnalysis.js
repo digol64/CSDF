@@ -21,10 +21,17 @@ export default function FileAnalysis() {
     formData.append("file", file);
 
     try {
-      const response = await api.post(
-        "/api/files/upload",
-        formData
-      );
+  const token = localStorage.getItem("token");
+
+  const response = await api.post(
+    "/api/files/upload",
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
       setResult(
         `Filename: ${response.data.filename}, SHA256: ${response.data.sha256}`
